@@ -1,7 +1,9 @@
 {
   "name": "@chrysb/alphaclaw",
   "version": "0.1.0",
-  "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "Setup UI, gateway manager, and onboarding wrapper for OpenClaw",
   "bin": {
     "alphaclaw": "./bin/alphaclaw.js"
