@@ -121,7 +121,7 @@ describe("server/openclaw-version", () => {
       }),
     );
     expect(execMock).toHaveBeenCalledWith(
-      "npm install --omit=dev --no-save --package-lock=false openclaw@latest",
+      "npm install --omit=dev --no-save --package-lock=false --prefer-online openclaw@latest",
       {
         cwd: kAppDir,
         env: expect.objectContaining({
