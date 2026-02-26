@@ -110,6 +110,52 @@
 .sidebar-update-btn:hover { background: rgba(227, 179, 65, 0.14); border-color: rgba(227, 179, 65, 0.35); }
 .sidebar-update-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
+/* ── Brand dropdown menu ───────────────────────── */
+
+.brand-menu {
+  position: relative;
+  margin-left: auto;
+}
+
+.brand-menu-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s;
+}
+.brand-menu-trigger:hover { background: var(--bg-hover); color: var(--text-muted); }
+
+.brand-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  min-width: 120px;
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 4px;
+  z-index: 50;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.brand-dropdown a {
+  display: block;
+  padding: 6px 10px;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background 0.1s, color 0.1s;
+}
+.brand-dropdown a:hover { background: var(--bg-hover); color: var(--text); }
+
 /* ── Statusbar ─────────────────────────────────── */
 
 .app-statusbar {
