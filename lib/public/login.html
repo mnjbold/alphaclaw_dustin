@@ -60,9 +60,9 @@
           id="submit-btn"
           type="submit"
           disabled
-          class="w-full text-sm font-medium px-4 py-2 rounded-lg bg-gray-800 text-gray-500 cursor-not-allowed"
+          class="w-full text-sm font-medium px-4 py-2 rounded-lg ac-btn-cyan"
         >
-          Continue
+          Enter
         </button>
       </form>
     </div>
@@ -71,22 +71,9 @@
       const passwordEl = document.getElementById("password");
       const submitButtonEl = document.getElementById("submit-btn");
 
-      const kEnabledClasses = ["bg-white", "text-black", "hover:opacity-85"];
-      const kDisabledClasses = [
-        "bg-gray-800",
-        "text-gray-500",
-        "cursor-not-allowed",
-      ];
-
       const syncButtonState = () => {
         const hasValue = passwordEl.value.length > 0;
         submitButtonEl.disabled = !hasValue;
-        kEnabledClasses.forEach((c) =>
-          submitButtonEl.classList.toggle(c, hasValue),
-        );
-        kDisabledClasses.forEach((c) =>
-          submitButtonEl.classList.toggle(c, !hasValue),
-        );
       };
 
       passwordEl.addEventListener("input", syncButtonState);
