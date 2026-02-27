@@ -45,11 +45,18 @@ body::before {
 .card-label {
   font-weight: 600;
   letter-spacing: 0.04em;
+  color: var(--text-muted);
 }
 
 /* Unified panel treatment across tabs/pages. */
 .bg-surface {
   background: var(--panel-bg-contrast) !important;
+  border-color: var(--panel-border-contrast) !important;
+}
+
+/* Solid background for modals so page content doesn't bleed through. */
+.bg-modal {
+  background: var(--bg) !important;
   border-color: var(--panel-border-contrast) !important;
 }
 

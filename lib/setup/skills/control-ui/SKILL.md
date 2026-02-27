@@ -27,7 +27,7 @@ When a user asks about pairing their Telegram or Discord account:
 
 ### Connecting OpenAI Codex OAuth
 
-> Connect or reconnect Codex OAuth from the Setup UI → **Models** tab ({{BASE_URL}}#models). Click **Connect Codex OAuth** and follow the popup flow.
+> Connect or reconnect Codex OAuth from the Setup UI → **Providers** tab ({{BASE_URL}}#providers). Click **Connect Codex OAuth** and follow the popup flow.
 
 ### Connecting Google Workspace
 
@@ -65,6 +65,6 @@ Config lives at `/data/.openclaw/gogcli/`.
 
 This is a reference so you know what's available — not an invitation to call these endpoints.
 
-- **General tab** (`{{BASE_URL}}#general`): Gateway status/restart, OpenClaw version + update, channel health, pending pairings, Google Workspace
-- **Models tab** (`{{BASE_URL}}#models`): Primary model selection, provider credentials, Codex OAuth
+- **General tab** (`{{BASE_URL}}#general`): Gateway status/restart, OpenClaw version + update, channel health, pending pairings, feature health (Embeddings/Audio), Google Workspace
+- **Providers tab** (`{{BASE_URL}}#providers`): Primary model selection, AI provider credentials, feature capabilities, Codex OAuth
 - **Envars tab** (`{{BASE_URL}}#envars`): View/edit/add environment variables, save to `/data/.env`

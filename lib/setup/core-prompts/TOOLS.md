@@ -8,8 +8,8 @@ AlphaClaw UI: `{{SETUP_UI_URL}}`
 
 | Tab     | URL                        | What it manages                                                                                                                                         |
 | ------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| General | `{{SETUP_UI_URL}}#general` | Gateway status & restart, channel health (Telegram/Discord), pending pairings, Google Workspace connection, repo auto-sync schedule, OpenClaw dashboard |
-| Models  | `{{SETUP_UI_URL}}#models`  | AI provider credentials (Anthropic, OpenAI, Google), Codex OAuth                                                                                        |
+| General | `{{SETUP_UI_URL}}#general` | Gateway status & restart, channel health (Telegram/Discord), pending pairings, feature health (Embeddings/Audio), Google Workspace connection, repo auto-sync schedule, OpenClaw dashboard |
+| Providers | `{{SETUP_UI_URL}}#providers` | AI provider credentials (Anthropic, OpenAI, Gemini, Mistral, Voyage, Groq, Deepgram), feature capabilities, Codex OAuth |
 | Envars  | `{{SETUP_UI_URL}}#envars`  | View/edit/add environment variables (saved to `/data/.env`), gateway restart to apply changes                                                           |
 
 ### Environment variables
