@@ -123,6 +123,20 @@ try {
 }
 
 // ---------------------------------------------------------------------------
+// 5. Symlink <rootDir>/.openclaw/.env -> <rootDir>/.env
+// ---------------------------------------------------------------------------
+
+const openclawEnvLink = path.join(openclawDir, ".env");
+try {
+  if (!fs.existsSync(openclawEnvLink)) {
+    fs.symlinkSync(envFilePath, openclawEnvLink);
+    console.log(`[alphaclaw] Symlinked ${openclawEnvLink} -> ${envFilePath}`);
+  }
+} catch (e) {
+  console.log(`[alphaclaw] .env symlink skipped: ${e.message}`);
+}
+
+// ---------------------------------------------------------------------------
 // 6. Load .env into process.env
 // ---------------------------------------------------------------------------
 
