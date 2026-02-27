@@ -106,36 +106,20 @@ try {
 }
 
 // ---------------------------------------------------------------------------
-// 4. Ensure shared ~/data/.env exists (seed from template if missing)
+// 4. Ensure <rootDir>/.env exists (seed from template if missing)
 // ---------------------------------------------------------------------------
 
 const envFilePath = path.join(rootDir, ".env");
-const sharedDataDir = path.join(os.homedir(), "data");
-const sharedEnvFilePath = path.join(sharedDataDir, ".env");
 const setupDir = path.join(__dirname, "..", "lib", "setup");
 const templatePath = path.join(setupDir, "env.template");
 
 try {
-  if (!fs.existsSync(sharedEnvFilePath) && fs.existsSync(templatePath)) {
-    fs.mkdirSync(sharedDataDir, { recursive: true });
-    fs.copyFileSync(templatePath, sharedEnvFilePath);
-    console.log(`[alphaclaw] Created shared env at ${sharedEnvFilePath}`);
+  if (!fs.existsSync(envFilePath) && fs.existsSync(templatePath)) {
+    fs.copyFileSync(templatePath, envFilePath);
+    console.log(`[alphaclaw] Created env at ${envFilePath}`);
   }
 } catch (e) {
-  console.log(`[alphaclaw] Shared .env setup skipped: ${e.message}`);
-}
-
-// ---------------------------------------------------------------------------
-// 5. Symlink <root>/.env -> ~/data/.env when available
-// ---------------------------------------------------------------------------
-
-try {
-  if (!fs.existsSync(envFilePath) && fs.existsSync(sharedEnvFilePath)) {
-    fs.symlinkSync(sharedEnvFilePath, envFilePath);
-    console.log(`[alphaclaw] Symlinked ${envFilePath} -> ${sharedEnvFilePath}`);
-  }
-} catch (e) {
-  console.log(`[alphaclaw] .env symlink skipped: ${e.message}`);
+  console.log(`[alphaclaw] .env setup skipped: ${e.message}`);
 }
 
 // ---------------------------------------------------------------------------
