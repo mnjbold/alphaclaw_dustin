@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>D1 AI Agent — Onboarding Handoff | Dustin Johnson</title>
+  <style>
+    /* ── Base Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #1a1f36;
+      background: #f4f6fb;
+      padding: 32px 16px;
+    }
+
+    /* ── Page wrapper ── */
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      background: #ffffff;
+      border: 1px solid #d1d5e8;
+      border-radius: 8px;
+      padding: 48px 56px;
+      box-shadow: 0 4px 24px rgba(26,31,54,0.10);
+    }
+
+    /* ── Typography ── */
+    h1 { font-size: 22px; font-weight: 700; color: #1a1f36; letter-spacing: -0.3px; }
+    h2 { font-size: 15px; font-weight: 700; color: #1a1f36; margin-bottom: 14px; }
+    h3 { font-size: 13px; font-weight: 700; color: #1a1f36; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+    p  { margin-bottom: 8px; }
+
+    /* ── Section divider ── */
+    .section { margin-bottom: 40px; }
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 18px;
+    }
+    .section-title.green  { background: #22c55e; }
+    .section-title.amber  { background: #f59e0b; }
+    .section-title.red    { background: #ef4444; }
+    .section-title.navy   { background: #1a1f36; }
+    .section-title.blue   { background: #3b5bdb; }
+
+    hr.divider {
+      border: none;
+      border-top: 2px solid #e5e9f5;
+      margin: 36px 0;
+    }
+
+    /* ── Header block ── */
+    .header-block {
+      background: #1a1f36;
+      color: #ffffff;
+      border-radius: 8px;
+      padding: 32px 36px;
+      margin-bottom: 36px;
+    }
+    .header-block h1 { color: #ffffff; font-size: 20px; margin-bottom: 6px; }
+    .header-block .subtitle {
+      color: #a0aec8;
+      font-size: 13px;
+      margin-bottom: 16px;
+    }
+    .header-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .meta-pill {
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 20px;
+      padding: 3px 12px;
+      font-size: 11.5px;
+      color: #e0e6f5;
+      font-weight: 500;
+    }
+    .meta-pill.green-pill {
+      background: rgba(34,197,94,0.18);
+      border-color: rgba(34,197,94,0.35);
+      color: #86efac;
+    }
+
+    /* ── Subsection label ── */
+    .subsection-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+      color: #6b7280;
+      border-bottom: 1px solid #e5e9f5;
+      padding-bottom: 5px;
+      margin: 22px 0 12px;
+    }
+
+    /* ── Tables ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 16px;
+      font-size: 12.5px;
+    }
+    thead tr {
+      background: #1a1f36;
+      color: #ffffff;
+    }
+    thead th {
+      text-align: left;
+      padding: 9px 12px;
+      font-weight: 600;
+      font-size: 11.5px;
+      letter-spacing: 0.3px;
+    }
+    tbody tr { border-bottom: 1px solid #edf0f8; }
+    tbody tr:nth-child(even) { background: #f8f9fd; }
+    tbody td { padding: 8px 12px; vertical-align: top; }
+    tbody td:first-child { white-space: nowrap; }
+
+    /* fillable table */
+    .fillable td:last-child {
+      color: #9ca3af;
+      font-style: italic;
+      border-bottom: 1px dashed #9ca3af;
+      min-width: 220px;
+    }
+
+    /* ── Checkbox list ── */
+    .check-list { list-style: none; margin: 0 0 12px; padding: 0; }
+    .check-list li {
+      padding: 5px 0 5px 2px;
+      border-bottom: 1px solid #f0f2f9;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 12.5px;
+    }
+    .check-list li:last-child { border-bottom: none; }
+    .check-list li .icon { flex-shrink: 0; margin-top: 1px; font-size: 14px; }
+    .check-list li .label { color: #374151; }
+    .check-list li .label strong { color: #1a1f36; }
+
+    /* ── Numbered step list ── */
+    .step-list { list-style: none; margin: 0 0 12px; padding: 0; counter-reset: step-counter; }
+    .step-list li {
+      counter-increment: step-counter;
+      display: flex;
+      gap: 14px;
+      margin-bottom: 18px;
+      align-items: flex-start;
+    }
+    .step-num {
+      background: #1a1f36;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 12px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-body { flex: 1; }
+    .step-title { font-weight: 700; font-size: 13px; color: #1a1f36; margin-bottom: 5px; }
+    .step-detail { font-size: 12px; color: #4b5563; line-height: 1.7; }
+    .step-detail .field { display: flex; gap: 6px; margin-bottom: 2px; }
+    .step-detail .field-label { color: #6b7280; min-width: 72px; font-weight: 600; flex-shrink: 0; }
+    .step-detail .field-value { color: #1a1f36; }
+    .step-detail .result {
+      margin-top: 6px;
+      background: #f0fdf4;
+      border-left: 3px solid #22c55e;
+      padding: 4px 10px;
+      border-radius: 0 4px 4px 0;
+      font-size: 11.5px;
+      color: #166534;
+      font-weight: 600;
+    }
+
+    /* ── Info box ── */
+    .info-box {
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      font-size: 12.5px;
+    }
+    .info-box.green-box  { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
+    .info-box.amber-box  { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; }
+    .info-box.red-box    { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+    .info-box.navy-box   { background: #eef2ff; border: 1px solid #c7d2fe; color: #3730a3; }
+    .info-box p { margin-bottom: 4px; }
+    .info-box p:last-child { margin-bottom: 0; }
+
+    /* ── Identity badges ── */
+    .identity-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .id-card {
+      background: #f8f9fd;
+      border: 1px solid #e5e9f5;
+      border-radius: 6px;
+      padding: 10px 14px;
+    }
+    .id-card .id-label { font-size: 10.5px; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.6px; font-weight: 600; margin-bottom: 3px; }
+    .id-card .id-value { font-size: 13px; color: #1a1f36; font-weight: 600; }
+    .id-card .id-sub   { font-size: 11.5px; color: #6b7280; margin-top: 1px; }
+
+    /* guardrails */
+    .guardrail-list { list-style: none; padding: 0; margin: 0; }
+    .guardrail-list li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 0;
+      font-size: 12.5px;
+      border-bottom: 1px solid #fde8e8;
+      color: #7f1d1d;
+    }
+    .guardrail-list li:last-child { border-bottom: none; }
+    .guardrail-list li::before { content: "🚫"; font-size: 13px; flex-shrink: 0; }
+
+    /* ── Not-Automated box ── */
+    .not-auto-box {
+      border: 2px solid #ef4444;
+      border-radius: 8px;
+      padding: 20px 24px;
+      background: #fef2f2;
+    }
+    .not-auto-box h2 { color: #991b1b; margin-bottom: 12px; }
+    .not-auto-list { list-style: none; padding: 0; margin: 0; }
+    .not-auto-list li {
+      display: flex;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid #fecaca;
+      font-size: 12.5px;
+      color: #7f1d1d;
+    }
+    .not-auto-list li:last-child { border-bottom: none; }
+    .not-auto-list li .na-icon { flex-shrink: 0; font-size: 14px; }
+    .not-auto-list li strong { color: #991b1b; }
+
+    /* ── Metrics table ── */
+    .metrics-table thead tr { background: #1a1f36; }
+    .metrics-table tbody tr:nth-child(even) { background: #f8f9fd; }
+    .metrics-table .target-cell { color: #166534; font-weight: 600; }
+
+    /* ── Support block ── */
+    .support-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .support-card {
+      background: #f8f9fd;
+      border: 1px solid #e5e9f5;
+      border-radius: 6px;
+      padding: 12px 16px;
+    }
+    .support-card .sc-label { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.6px; font-weight: 700; color: #9ca3af; margin-bottom: 4px; }
+    .support-card .sc-value { font-size: 13px; color: #1a1f36; font-weight: 600; }
+    .support-card .sc-sub   { font-size: 11.5px; color: #6b7280; }
+
+    .recovery-chain {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      font-size: 12px;
+    }
+    .chain-node {
+      background: #1a1f36;
+      color: #ffffff;
+      border-radius: 4px;
+      padding: 3px 10px;
+      font-weight: 600;
+      font-size: 11.5px;
+    }
+    .chain-arrow { color: #9ca3af; font-size: 14px; }
+
+    /* ── Sign-off box ── */
+    .signoff-box {
+      border: 2px solid #1a1f36;
+      border-radius: 8px;
+      padding: 24px 28px;
+      margin-top: 36px;
+      background: #f8f9fd;
+    }
+    .signoff-box h2 { color: #1a1f36; margin-bottom: 18px; font-size: 14px; }
+    .signoff-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+    .signoff-line { border-top: 1.5px solid #1a1f36; padding-top: 6px; }
+    .signoff-name  { font-size: 13px; font-weight: 700; color: #1a1f36; }
+    .signoff-title { font-size: 11.5px; color: #6b7280; margin-top: 2px; }
+    .signoff-date  { font-size: 11px; color: #9ca3af; margin-top: 14px; }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center;
+      font-size: 11px;
+      color: #9ca3af;
+      margin-top: 40px;
+      padding-top: 16px;
+      border-top: 1px solid #e5e9f5;
+    }
+    .footer strong { color: #6b7280; }
+
+    /* ── Print styles ── */
+    @media print {
+      body { background: #ffffff; padding: 0; font-size: 11px; }
+      .page { box-shadow: none; border: none; border-radius: 0; padding: 24px 32px; max-width: 100%; }
+      .page-break { page-break-before: always; }
+      .no-break { page-break-inside: avoid; }
+      a { color: inherit; text-decoration: none; }
+      .header-block { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .section-title { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      thead tr { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+
+    /* ── Utility ── */
+    .text-muted { color: #9ca3af; font-size: 11.5px; }
+    .badge {
+      display: inline-block;
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 1px 7px;
+      border-radius: 10px;
+      letter-spacing: 0.3px;
+    }
+    .badge-green { background: #dcfce7; color: #166534; }
+    .badge-amber { background: #fef3c7; color: #92400e; }
+    .badge-red   { background: #fee2e2; color: #991b1b; }
+    .badge-navy  { background: #e0e7ff; color: #3730a3; }
+    .mt-4  { margin-top: 4px; }
+    .mt-8  { margin-top: 8px; }
+    .mt-12 { margin-top: 12px; }
+    .mb-4  { margin-bottom: 4px; }
+    .mb-8  { margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ══════════════════════════════════════════
+       SECTION 1 — HEADER
+  ══════════════════════════════════════════ -->
+  <div class="header-block no-break">
+    <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+      <div>
+        <div style="font-size:10.5px; letter-spacing:1.2px; text-transform:uppercase; color:#a0aec8; font-weight:700; margin-bottom:6px;">Internal Onboarding Document · Confidential</div>
+        <h1>D1 AI Agent — Onboarding Handoff</h1>
+        <div class="subtitle" style="font-size:15px; color:#e0e6f5; margin-top:4px;">Dustin Johnson · Finance / HR / IT</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="badge badge-green" style="font-size:11px; padding:4px 12px;">READY FOR HANDOFF</div>
+        <div style="font-size:11px; color:#a0aec8; margin-top:8px;">2026-04-22</div>
+      </div>
+    </div>
+    <div class="header-meta">
+      <span class="meta-pill">djohnson@boldbusiness.com</span>
+      <span class="meta-pill">PH Timezone (GMT+8)</span>
+      <span class="meta-pill">Finance · HR · IT</span>
+      <span class="meta-pill green-pill">Agent: D1</span>
+      <span class="meta-pill">Prepared by: Jewel (BAIT Team)</span>
+      <span class="meta-pill">BAIT Team · mnurunnabi@boldbusiness.com</span>
+    </div>
+  </div>
+
+  <div class="info-box navy-box no-break" style="margin-bottom:32px;">
+    <strong>How to read this document:</strong> Section 2 covers everything that has already been built and configured — no action needed from Dustin there. Section 3 is Dustin's personal to-do list, in order of priority. Sections 4–6 are reference material for the ongoing engagement.
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       SECTION 2 — WHAT'S ALREADY BUILT
+  ══════════════════════════════════════════ -->
+  <div class="section page-break">
+    <span class="section-title green">Section 2</span>
+    <h2 style="font-size:17px; margin-bottom:4px;">✅ Configured &amp; Ready — No Action Needed</h2>
+    <p class="text-muted" style="margin-bottom:20px;">Everything below has been built, tested, and is live. Dustin does not need to configure, manage, or touch any of this.</p>
+
+    <!-- Subsection: Identity -->
+    <div class="subsection-label">Agent Identity</div>
+
+    <div class="identity-grid no-break">
+      <div class="id-card">
+        <div class="id-label">Agent Name</div>
+        <div class="id-value">D1</div>
+        <div class="id-sub">AlphaClaw deployment · Bold Business</div>
+      </div>
+      <div class="id-card">
+        <div class="id-label">Primary Model</div>
+        <div class="id-value">Claude Opus + Sonnet 4.6</div>
+        <div class="id-sub">Opus for reasoning · Sonnet for execution</div>
+      </div>
+      <div class="id-card">
+        <div class="id-label">Heartbeat / Active Hours</div>
+        <div class="id-value">Every 30 minutes</div>
+        <div class="id-sub">7:00am – 5:00pm PH · Mon–Fri</div>
+      </div>
+      <div class="id-card">
+        <div class="id-label">Direct Reports Loaded</div>
+        <div class="id-value">5 team members</div>
+        <div class="id-sub">Viviana · Vina · Alana · Earmiel · Wendy</div>
+      </div>
+    </div>
+
+    <!-- Guardrails -->
+    <div class="subsection-label">Hardcoded Guardrails (cannot be overridden by D1)</div>
+    <div class="info-box red-box no-break" style="padding:12px 18px;">
+      <ul class="guardrail-list">
+        <li>No email is sent without explicit approval from Dustin — D1 drafts only</li>
+        <li>No payroll submission — D1 prepares the analysis, Dustin submits</li>
+        <li>No invoice approval — D1 audits and surfaces findings, Dustin approves</li>
+      </ul>
+    </div>
+
+    <!-- 18 Automated Jobs -->
+    <div class="subsection-label" style="margin-top:24px;">18 Automated Jobs — Full Schedule</div>
+
+    <table class="no-break">
+      <thead>
+        <tr>
+          <th style="width:18%;">Time / Frequency</th>
+          <th style="width:28%;">Job Name</th>
+          <th>What It Does</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="badge badge-green">7:00am daily</span></td>
+          <td><strong>Morning Brief</strong></td>
+          <td>Pulls calendar, AR aging, HR items (Monday), IT Jira tickets, and payment alerts. Sends full brief via email + Google Chat.</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-green">8:05am daily</span></td>
+          <td><strong>IT Check-in Prep</strong></td>
+          <td>Pulls all open Jira tickets, highlights critical/blocked items, emails Earmiel a structured prep brief before the 8:15am daily IT meeting.</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-green">8:28am daily</span></td>
+          <td><strong>Team Tracker Scrub</strong></td>
+          <td>Reviews the team overview dashboard and surfaces any overdue items or status gaps ahead of Viviana's 8:30am standup.</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-amber">10:00am Mon</span></td>
+          <td><strong>Alana 1:1 Prep</strong></td>
+          <td>Compiles AR status, outstanding client follow-ups, and a structured 1-on-1 agenda for the Alana meeting.</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-amber">8:30am Tue</span></td>
+          <td><strong>Invoice Approval Queue</strong></td>
+          <td>Audits all pending invoices for anomalies, flags items, and surfaces a review queue to Dustin. D1 never auto-approves.</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-amber">9:00am Wed</span></td>
+          <td><strong>Vina HR TB Prep</strong></td>
+          <td>Conducts HR audit review (Greenhouse, DocuSign, Jira HR), surfaces compliance or headcount items to Dustin before the Vina call.</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-amber">10:00am Wed</span></td>
+          <td><strong>Bold Weekly Sales Call Prep</strong></td>
+          <td>Prepares meeting brief focused on Justin's slides, identifies discussion topics, and surfaces key prep points for the weekly sales call.</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-navy">10:00am alt-Wed</span></td>
+          <td><strong>Biweekly Payroll Check</strong></td>
+          <td>Pulls T-Sheets data, runs trend analysis on hours and headcount, sends overview to Dustin and Ed. No counts submitted — HITL gate enforced.</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-amber">9:00am Thu</span></td>
+          <td><strong>Thursday Team Call Prep</strong></td>
+          <td>Reviews prior meeting notes, flags actionable items not yet resolved, confirms agenda topics with Dustin before the team call.</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-amber">11:00am Thu</span></td>
+          <td><strong>Ed Weekly Call Prep</strong></td>
+          <td>Synthesizes Finance + HR + IT into an executive summary. Draws on Wednesday's team reports to produce analysis and insights specifically for the Thursday Ed call.</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-amber">11:30am Thu</span></td>
+          <td><strong>Leadership Call Prep</strong></td>
+          <td>Compares current Monday board state vs. prior week, creates action checklists and topic prep for the leadership sync.</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-green">4:30pm daily</span></td>
+          <td><strong>EOD Action Check</strong></td>
+          <td>Groups all email items into categorized action lists, creates Monday board tasks, initiates 1-month follow-up loops where applicable. Sent via email and Google Chat.</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-green">5:00pm daily</span></td>
+          <td><strong>EOD Summary</strong></td>
+          <td>Generates dashboard update report from the day's activity and saves the daily report to a designated Google Drive folder.</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-green">9:00am Fri</span></td>
+          <td><strong>IT Weekly Report</strong></td>
+          <td>Follows the EOD summary format. Covers all Jira ISD tickets, infrastructure status, and Teramind activity for the week.</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-green">9:05am Fri</span></td>
+          <td><strong>HR Weekly Report</strong></td>
+          <td>Follows the EOD summary format. Covers HR Jira tickets, DocuSign pending items, Greenhouse pipeline, and visa/compliance status.</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-green">10:00am Fri</span></td>
+          <td><strong>AI Spend Weekly</strong></td>
+          <td>Pulls AI usage data from Jira and Monday, calculates spend by service and team, creates insights, and updates the AI Spend Tracker sheet.</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-green">11:30am Fri</span></td>
+          <td><strong>Earmiel TB Prep</strong></td>
+          <td>Pulls open Jira tickets and reviews past meeting minutes to prepare a structured brief for the Earmiel team briefing.</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-navy">9:00am · 1st Mon/month</span></td>
+          <td><strong>Monthly Financials Reminder</strong></td>
+          <td>Sends a reminder to the team to prepare financial reports. By the 3rd Monday of the month, D1 delivers a compiled financial analysis to Dustin.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Databases -->
+    <div class="subsection-label" style="margin-top:24px;">Databases Created For You</div>
+
+    <div class="info-box green-box no-break">
+      <p><strong>These Google Sheets are new — created and owned by D1.</strong> You do not need to manage, update, or even open them. D1 writes to them automatically on schedule. Your only action is to share access to your existing Monday boards and Jira projects so D1 can read from them (see Section 3).</p>
+    </div>
+
+    <table class="no-break">
+      <thead>
+        <tr>
+          <th style="width:32%;">Sheet / Database</th>
+          <th>Purpose</th>
+          <th style="width:16%;">Who Writes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>D1 — Action Items &amp; Reports</strong></td>
+          <td>All action items captured from emails and meetings; manages the 1-month follow-up loop automatically.</td>
+          <td><span class="badge badge-green">D1 (auto)</span></td>
+        </tr>
+        <tr>
+          <td><strong>D1 — AR Tracker</strong></td>
+          <td>Accounts receivable aging table, outstanding balances, and client follow-up status updated from Monday.</td>
+          <td><span class="badge badge-green">D1 (auto)</span></td>
+        </tr>
+        <tr>
+          <td><strong>D1 — Payroll History</strong></td>
+          <td>Biweekly trend analysis of hours and headcount over time, sourced from T-Sheets via QuickBooks Time.</td>
+          <td><span class="badge badge-green">D1 (auto)</span></td>
+        </tr>
+        <tr>
+          <td><strong>D1 — AI Spend Tracker</strong></td>
+          <td>Weekly AI cost breakdown by service and team, with trend insights and budget variance analysis.</td>
+          <td><span class="badge badge-green">D1 (auto)</span></td>
+        </tr>
+        <tr>
+          <td><strong>D1 — Daily Reports Archive</strong></td>
+          <td>Permanent archive of all EOD summaries, IT weekly reports, and HR weekly reports — never overwritten.</td>
+          <td><span class="badge badge-green">D1 (auto)</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div><!-- /section 2 -->
+
+  <hr class="divider" />
+
+
+  <!-- ══════════════════════════════════════════
+       SECTION 3 — DUSTIN'S TO-DO LIST
+  ══════════════════════════════════════════ -->
+  <div class="section page-break">
+    <span class="section-title amber">Section 3</span>
+    <h2 style="font-size:17px; margin-bottom:4px;">⏳ Dustin's To-Do List — Please Complete In Order</h2>
+    <p class="text-muted" style="margin-bottom:20px;">Three subsections below. A + B must be done by Dustin personally (cannot be delegated). C is a form to fill out and send to Jewel.</p>
+
+    <!-- Subsection A -->
+    <div class="subsection-label">A — One-Time Auth (must be done by Dustin personally)</div>
+    <div class="info-box amber-box no-break" style="margin-bottom:16px;">
+      These logins use OAuth — they must be completed by Dustin in his own browser session using his djohnson@boldbusiness.com account. They cannot be done by proxy or delegation.
+    </div>
+
+    <ol class="step-list">
+
+      <li class="no-break">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">GitHub Copilot Login</div>
+          <div class="step-detail">
+            <div class="field"><span class="field-label">Go to:</span><span class="field-value">[D1 AlphaClaw URL]/setup</span></div>
+            <div class="field"><span class="field-label">Navigate:</span><span class="field-value">Models → GitHub Copilot → Connect</span></div>
+            <div class="field"><span class="field-label">Sign in with:</span><span class="field-value">djohnson@boldbusiness.com GitHub account</span></div>
+            <div class="result">✅ Result: Claude Sonnet model becomes available in D1's model selector</div>
+          </div>
+        </div>
+      </li>
+
+      <li class="no-break">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Google Workspace Login</div>
+          <div class="step-detail">
+            <div class="field"><span class="field-label">Go to:</span><span class="field-value">[D1 AlphaClaw URL]/setup</span></div>
+            <div class="field"><span class="field-label">Navigate:</span><span class="field-value">Integrations → Google → Add Account</span></div>
+            <div class="field"><span class="field-label">Sign in with:</span><span class="field-value">djohnson@boldbusiness.com</span></div>
+            <div class="field"><span class="field-label">Grant access:</span><span class="field-value">Gmail · Calendar · Drive · Sheets · Docs · Tasks · Contacts · Meet</span></div>
+            <div class="result">✅ Result: D1 can read your email, calendar, and Drive — and write to the 5 database sheets listed in Section 2</div>
+          </div>
+        </div>
+      </li>
+
+      <li class="no-break">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Add D1 Bot to Google Chat</div>
+          <div class="step-detail">
+            <div class="field"><span class="field-label">Open:</span><span class="field-value">Google Chat</span></div>
+            <div class="field"><span class="field-label">Search:</span><span class="field-value">bijouclaw@gen-lang-client-0768862569.iam.gserviceaccount.com</span></div>
+            <div class="field"><span class="field-label">Action:</span><span class="field-value">Start a DM with that account</span></div>
+            <div class="field"><span class="field-label">Then:</span><span class="field-value">Copy the users/XXXXXXXXX ID from the URL bar</span></div>
+            <div class="field"><span class="field-label">Send to:</span><span class="field-value">Jewel — that ID becomes your DUSTIN_CHAT_USER_ID in the system</span></div>
+            <div class="result">✅ Result: D1 can send morning briefs, alerts, and EOD summaries directly to your Google Chat DM</div>
+          </div>
+        </div>
+      </li>
+
+    </ol>
+
+    <!-- Subsection B -->
+    <div class="subsection-label" style="margin-top:24px;">B — API Keys to Generate (Dustin provides, Jewel adds to system)</div>
+    <div class="info-box amber-box no-break" style="margin-bottom:16px;">
+      Generate each key using the instructions below and send them to Jewel via a secure channel (Google Chat DM or encrypted email). Do not send in Slack or open email threads.
+    </div>
+
+    <table class="no-break">
+      <thead>
+        <tr>
+          <th style="width:28%;">Key / Secret</th>
+          <th>Where to Generate It</th>
+          <th style="width:14%;">Send To</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>MONDAY_API_KEY</strong></td>
+          <td>monday.com → Click your profile picture (top-right) → Developers → My API Tokens → Generate Token</td>
+          <td>Jewel</td>
+        </tr>
+        <tr>
+          <td><strong>JIRA_API_TOKEN</strong></td>
+          <td>id.atlassian.com → Sign in → Security tab → API Tokens → Create API Token → name it "D1 Agent"</td>
+          <td>Jewel</td>
+        </tr>
+        <tr>
+          <td><strong>QUICKBOOKS_CLIENT_ID + CLIENT_SECRET</strong></td>
+          <td>Intuit Developer Portal (developer.intuit.com) → Create App → Production Keys → Keys &amp; OAuth tab</td>
+          <td>Jewel</td>
+        </tr>
+        <tr>
+          <td><strong>TSHEETS_API_KEY</strong></td>
+          <td>QuickBooks Time → Gear icon (top-right) → Company Settings → API Tokens → Generate New Token</td>
+          <td>Jewel</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Subsection C -->
+    <div class="subsection-label" style="margin-top:24px;">C — Access Details Needed (fill in and send to Jewel)</div>
+    <div class="info-box amber-box no-break" style="margin-bottom:16px;">
+      Fill in the blanks below and return this section to Jewel. Board IDs are found in the URL when you open a board in Monday.com (e.g., monday.com/boards/<strong>1234567890</strong>). If you are unsure of any value, write your best guess and Jewel will verify.
+    </div>
+
+    <table class="fillable no-break">
+      <thead>
+        <tr>
+          <th style="width:52%;">Item</th>
+          <th>Your Answer</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Monday Finance Board ID <span class="text-muted">(from URL: monday.com/boards/XXXXXXXX)</span></td>
+          <td>____________</td>
+        </tr>
+        <tr>
+          <td>Monday HR Board ID</td>
+          <td>____________</td>
+        </tr>
+        <tr>
+          <td>Monday IT Board ID</td>
+          <td>____________</td>
+        </tr>
+        <tr>
+          <td>Monday General / Leadership Board ID</td>
+          <td>____________</td>
+        </tr>
+        <tr>
+          <td>Jira IT Project Key <span class="text-muted">(currently assuming: ISD — confirm or correct)</span></td>
+          <td>____________</td>
+        </tr>
+        <tr>
+          <td>Jira HR Project Key <span class="text-muted">(currently assuming: HR — confirm or correct)</span></td>
+          <td>____________</td>
+        </tr>
+        <tr>
+          <td>Google Drive folder where daily reports should be saved <span class="text-muted">(share link, or write "create new")</span></td>
+          <td>____________</td>
+        </tr>
+        <tr>
+          <td>QuickBooks company name / ID</td>
+          <td>____________</td>
+        </tr>
+        <tr>
+          <td>Greenhouse API key or contact person for API access</td>
+          <td>____________</td>
+        </tr>
+        <tr>
+          <td>Teramind dashboard URL or API access details</td>
+          <td>____________</td>
+        </tr>
+        <tr>
+          <td>Payroll schedule — biweekly start date (first payroll Wednesday)</td>
+          <td>____________</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div><!-- /section 3 -->
+
+  <hr class="divider" />
+
+
+  <!-- ══════════════════════════════════════════
+       SECTION 4 — NOT AUTOMATED
+  ══════════════════════════════════════════ -->
+  <div class="section page-break no-break">
+    <span class="section-title red">Section 4</span>
+    <h2 style="font-size:17px; margin-bottom:16px;">🔒 Not Automated — By Design</h2>
+
+    <div class="not-auto-box">
+      <h2>These actions always require Dustin's explicit approval — D1 will never act unilaterally</h2>
+      <ul class="not-auto-list">
+        <li>
+          <span class="na-icon">✉️</span>
+          <div><strong>Email sending:</strong> D1 drafts every email and presents it for approval. No email leaves Dustin's account without him clicking send or explicitly approving dispatch.</div>
+        </li>
+        <li>
+          <span class="na-icon">💰</span>
+          <div><strong>Payroll submission:</strong> D1 prepares the full biweekly analysis and surfaces it to Dustin and Ed. Dustin submits payroll. D1 has no write access to payroll systems.</div>
+        </li>
+        <li>
+          <span class="na-icon">🧾</span>
+          <div><strong>Invoice approval:</strong> D1 audits the invoice queue, flags anomalies, and presents a structured review. Dustin approves or rejects each invoice. D1 cannot approve invoices.</div>
+        </li>
+        <li>
+          <span class="na-icon">🔐</span>
+          <div><strong>Sharing financials externally:</strong> Any financial data shared outside @boldbusiness.com or @mercuryz.com domains requires Dustin's explicit approval on a per-share basis.</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+
+  <!-- ══════════════════════════════════════════
+       SECTION 5 — SUCCESS METRICS
+  ══════════════════════════════════════════ -->
+  <div class="section no-break">
+    <span class="section-title blue">Section 5</span>
+    <h2 style="font-size:17px; margin-bottom:6px;">📊 Success Metrics — 2-Week Review</h2>
+    <p class="text-muted" style="margin-bottom:16px;">D1 will be evaluated against these targets at the 2-week mark. Jewel will pull the metrics from D1's logs and present a review to Dustin.</p>
+
+    <table class="metrics-table no-break">
+      <thead>
+        <tr>
+          <th style="width:52%;">Metric</th>
+          <th>Target</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Morning brief delivery time</td>
+          <td class="target-cell">7:00am ±5 min, Mon–Fri</td>
+        </tr>
+        <tr>
+          <td>Pre-meeting briefs delivered on time</td>
+          <td class="target-cell">All 18 cron jobs fire on schedule with no manual restarts</td>
+        </tr>
+        <tr>
+          <td>Invoice queue ready (Tuesday)</td>
+          <td class="target-cell">Audit complete and surfaced to Dustin before 9:00am</td>
+        </tr>
+        <tr>
+          <td>Ed call prep quality</td>
+          <td class="target-cell">Dustin needs no additional research or manual prep before the call</td>
+        </tr>
+        <tr>
+          <td>Team tracker accuracy</td>
+          <td class="target-cell">Fewer than 1 missed overdue item per week</td>
+        </tr>
+        <tr>
+          <td>False positive alerts</td>
+          <td class="target-cell">Fewer than 3 per week</td>
+        </tr>
+        <tr>
+          <td>Time saved (Dustin self-report)</td>
+          <td class="target-cell">Dustin reports more than 2 hours saved per week</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider" />
+
+
+  <!-- ══════════════════════════════════════════
+       SECTION 6 — SUPPORT
+  ══════════════════════════════════════════ -->
+  <div class="section no-break">
+    <span class="section-title navy">Section 6</span>
+    <h2 style="font-size:17px; margin-bottom:16px;">🛟 Support &amp; Recovery</h2>
+
+    <div class="info-box navy-box" style="margin-bottom:18px;">
+      <strong>If D1 is not responding or a cron job missed:</strong><br />
+      Open the AlphaClaw UI → navigate to the <strong>Watchdog</strong> tab → check the gateway status indicator. Most issues resolve within 5 minutes via auto-restart. If the gateway shows red for more than 10 minutes, escalate to Jewel.
+    </div>
+
+    <div class="support-grid">
+      <div class="support-card">
+        <div class="sc-label">Primary Contact</div>
+        <div class="sc-value">Jewel Nurunnabi (BAIT Team)</div>
+        <div class="sc-sub">mnurunnabi@boldbusiness.com</div>
+        <div class="sc-sub" style="margin-top:4px;">Google Chat · Direct Message</div>
+      </div>
+      <div class="support-card">
+        <div class="sc-label">Self-Service</div>
+        <div class="sc-value">AlphaClaw UI → Watchdog</div>
+        <div class="sc-sub">Check gateway status, view cron job logs, trigger manual runs</div>
+      </div>
+    </div>
+
+    <div class="subsection-label" style="margin-top:20px;">Escalation / Recovery Chain</div>
+    <p class="text-muted" style="margin-bottom:10px;">If Jewel is unreachable, escalate in this order:</p>
+    <div class="recovery-chain">
+      <span class="chain-node">Dustin Johnson</span>
+      <span class="chain-arrow">→</span>
+      <span class="chain-node">Ed Kopko</span>
+      <span class="chain-arrow">→</span>
+      <span class="chain-node">Earmiel</span>
+      <span class="chain-arrow">→</span>
+      <span class="chain-node">Vina</span>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+
+  <!-- ══════════════════════════════════════════
+       SIGN-OFF BOX
+  ══════════════════════════════════════════ -->
+  <div class="signoff-box no-break">
+    <h2>Document Sign-Off</h2>
+    <p class="text-muted" style="margin-bottom:20px;">By signing below, both parties confirm that the onboarding scope, guardrails, and to-do items have been reviewed and agreed upon.</p>
+
+    <div class="signoff-grid">
+      <div>
+        <div class="signoff-line"></div>
+        <div class="signoff-name">Dustin Johnson</div>
+        <div class="signoff-title">Finance / HR / IT Lead · Bold Business</div>
+        <div class="signoff-date">Signature &amp; Date: ___________________________</div>
+      </div>
+      <div>
+        <div class="signoff-line"></div>
+        <div class="signoff-name">Jewel Nurunnabi</div>
+        <div class="signoff-title">AI Architect · BAIT Team · Bold Business</div>
+        <div class="signoff-date">Signature &amp; Date: ___________________________</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════ -->
+  <div class="footer">
+    <strong>D1 Agent — Prepared by BAIT Team · Bold Business · 2026-04-22</strong><br />
+    This document is confidential and intended solely for Dustin Johnson and the BAIT Team. Do not distribute externally.
+  </div>
+
+</div><!-- /page -->
+</body>
+</html>
