@@ -13,29 +13,29 @@
 - [x] Manager: Ed Kopko (CEO)
 - [x] Direct reports: Viviana, Vina, Alana, Earmiel, Wendy — in USER.md
 - [x] Timezone: PH (UTC+8)
-- [x] Model: `github-copilot/claude-sonnet-4.6` (977k ctx, finance reasoning)
+- [x] Model: `claude-Opus+sonnet-4.6` (977k ctx, finance reasoning)
 - [x] Heartbeat: every 30min, 8am–5pm PH, lightContext + isolatedSession
 - [x] Workspace files: IDENTITY, SOUL, USER, AGENTS, TOOLS, HEARTBEAT, MODELS, BOOT
 
 ### Automations & Cron (18 jobs — all in `config/cron-jobs.json`)
-- [x] Morning Brief — 8:00am PH daily (calendar, AR, HR/IT tickets, payments, alerts)
-- [x] IT Check-in Prep — 8:05am PH daily (before Earmiel 8:15)
-- [x] Team Tracker Scrub — 8:28am PH daily (before Vivi 8:30)
-- [x] Monday Alana TB Prep — 10:00am Monday
+- [x] Morning Brief — 7:00am PH daily (calendar, AR, HR(MONDAY)/IT tickets(JIRA), payments(Email), alerts (email +chat))
+- [x] IT Check-in Prep — 8:05am PH daily (before Earmiel 8:15) ( EMAIL + PULL JIRA TICKET - HIghlets anything critacl + meeting prep)
+- [x] Team Tracker Scrub — 8:28am PH daily (before Vivi 8:30) ( Overview Dashboard)
+- [x] Monday Alana TB Prep — 10:00am Monday ( 1 one 1 meeting and meeting prep, ar ,client followups)
 - [x] Invoice Approval Queue — 8:30am Tuesday (audit, never auto-approve)
-- [x] Vina HR TB Prep — 9:00am Wednesday
-- [x] Bold Weekly Sales Call Prep — 10:00am Wednesday
-- [x] Biweekly Payroll Check — 10:00am alt-Wednesday (T-Sheets audit, HITL)
-- [x] Thursday Team Call Prep — 9:00am Thursday
-- [x] Ed Weekly Call Prep — 11:00am Thursday (Finance+HR+IT exec summary)
-- [x] Leadership Call Prep — 11:30am Thursday
-- [x] EOD Action Check — 4:30pm PH daily (unresponded, DocuSign queue)
-- [x] EOD Summary — 5:00pm PH daily
-- [x] IT Weekly Report — 9:00am Friday (Jira tickets, infra, Teramind)
-- [x] HR Weekly Report — 9:05am Friday (tickets, aging, Greenhouse, visa)
-- [x] AI Spend Weekly — 10:00am Friday
-- [x] Earmiel TB Prep — 11:30am Friday
-- [x] Monthly Financials — 9:00am 1st of month (cash+accrual+client P&Ls)
+- [x] Vina HR TB Prep — 9:00am Wednesday (audit, never auto-approve)
+- [x] Bold Weekly Sales Call Prep — 10:00am Wednesday ( Meeting Prep - if can focus on Justin Slides + Prepa about topic discuss)
+- [x] Biweekly Payroll Check — 10:00am alt-Wednesday (T-Sheets audit, HITL) ( Check with DUSTIN - every 2nd week of biweekly wednesday , check with Dustin on previous week)  for biweekly , to do trend analysis and send overview to Dustin and ED, no counting. 
+- [x] Thursday Team Call Prep — 9:00am Thursday (general meeting , agent to look thorugh meeting notes for any actionalable information and confirm with Dustin if requiree any actions for them)
+- [x] Ed Weekly Call Prep — 11:00am Thursday (Finance+HR+IT exec summary) [ REPORT GET FORM TEAM ON WEDNSDAY AND DISCUSS ON THURSDAY WITH ED, EXPECT TO AHVE ANALAYSIS AND INSIGNTS TO DISCUSS WITH ED )
+- [x] Leadership Call Prep — 11:30am Thursday [ CHECK MONDAY BOARD COMPARE PREVIOUS WEEKS TASKS , AND CREATE VALIDATIONS, CHECK LISTS, AND TOPIC PREP AND FOLLOW UP )
+- [x] EOD Action Check — 4:30pm PH daily (unresponded, DocuSign queue) [From email groped item create action chek items lists and update , Create actions items on monday and weekly feed back followup loop for a month to check on the tasks ouput , send this via email & google chat] 
+- [x] EOD Summary — 5:00pm PH daily [ SEND AS DASHBAORD UPDATE REPORTS, AS WELL AS DAILY REPORTS TO BE SAVED IN A FOLDER - UPDATE]
+- [x] IT Weekly Report — 9:00am Friday (Jira tickets, infra, Teramind) FOLLOW EOD SUMMURY
+- [x] HR Weekly Report — 9:05am Friday (tickets, aging, Greenhouse, visa) FOLLOW EOD SUMMURY
+- [x] AI Spend Weekly — 10:00am Friday  [ Ai Spend TO GET FROM JIRA & MONDAY AND GET INSIGHT AND REPORTS, AND CRETATE A TRACKER] 
+- [x] Earmiel TB Prep — 11:30am Friday [ FROM JIRA TICKETS & PAST MEETING MINUTES]
+- [x] Monthly Financials — 9:00am 1st of month (cash+accrual+client P&Ls) [ BY THE 2ND MONDAY TO INFORM N REMIND TEAM TO PREPARE FINANCIAL REPORTS OF MONTHLY , AND BY 3RD MONDAY OF THE OF THE MONTH TO SEND ANALYSIS AND SHARE WITH DUSTIN. 
 
 ### Scripts
 - [x] `morning_brief.sh` — calendar, email, DocuSign, IT alerts, JIRA scrape
@@ -69,8 +69,8 @@
 - [x] Google Drive: read + search
 - [x] Google Sheets: read + write (reports)
 - [x] Google Chat: send DMs
-- [x] Monday.com: read + create/move items
-- [x] QuickBooks: read + create invoices (HITL)
+- [x] Monday.com: read + create/move items ( MONDAY BOARD API KEY)
+- [x] QuickBooks: read + create invoices (HITL) (MCP QUICKBOOK) 
 - [x] T-Sheets: pull reports (read)
 - [x] Jira: read tickets
 - [x] DocuSign: read pending signatures
