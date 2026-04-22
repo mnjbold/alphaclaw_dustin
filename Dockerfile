@@ -13,6 +13,7 @@ RUN apk add --no-cache \
 
 # Install dependencies first (layer cache)
 COPY package*.json ./
+COPY scripts/ ./scripts/
 RUN npm ci --omit=dev
 
 # Copy application source
