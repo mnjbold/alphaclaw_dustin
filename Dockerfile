@@ -19,9 +19,6 @@ RUN npm run build:ui
 # Prune devDependencies after build to keep image lean
 RUN npm prune --omit=dev
 
-# Persistent data volume --- openclaw config, credentials, memory
-VOLUME ["/app/.openclaw"]
-
 # AlphaClaw web UI
 EXPOSE 3000
 
